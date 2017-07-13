@@ -1,0 +1,16 @@
+---
+
+# Tasks for ansible-role-metaphlan2
+
+- name: Ensure that the software folder already exists
+  file: path={{ ansible_env.PWD }}/software state=directory mode=0777
+
+- name: Clone the metaphlan2 repo from BitBucket
+  hg: 
+    repo: https://bitbucket.org/biobakery/metaphlan2
+    dest: "{{ ansible_env.PWD }}/software/metaphlan2/"
+    clone: yes
+        
+
+- name: Add metaphlan2 to the PATH
+  shell: echo export PATH={{ ansible_env.PWD }}/software/metaphlan2/:$PATH >> {{ ansible_env.PWD }}/.bashrc
